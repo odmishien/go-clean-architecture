@@ -11,8 +11,19 @@ type UserRepositoryImpl struct {
 
 func NewUserRepository() usecase.UserRepository {
 	return &UserRepositoryImpl{
-		db: []entity.User{},
+		db: []entity.User{
+			{
+				ID:       1,
+				Name:     "hoge",
+				Email:    "hoge.gmail.com",
+				Password: "asdfaygaerga",
+			},
+		},
 	}
+}
+
+func (r *UserRepositoryImpl) GetAll() (entity.Users, error) {
+	return r.db, nil
 }
 
 func (r *UserRepositoryImpl) Create(entity.User) (id int, err error) {
