@@ -6,5 +6,6 @@ import (
 )
 
 type UserPresenter interface {
-	ViewAll(ctx context.Context, output *output.UserGetAllOutputData, err error)
+	ViewAll(ctx context.Context, output *output.UserGetAllOutputData)
+	ViewError(ctx context.Context, err error)
 }

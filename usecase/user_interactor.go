@@ -27,12 +27,12 @@ func NewUserInteractor(repo UserRepository, presenter UserPresenter) UserInterac
 func (i *UserInteractorImpl) GetAll(ctx context.Context) {
 	users, err := i.repo.GetAll(ctx)
 	if err != nil {
-		i.presenter.ViewAll(ctx, nil, err)
+		i.presenter.ViewError(ctx, err)
 	}
 	o := &output.UserGetAllOutputData{
 		Users: users,
 	}
-	i.presenter.ViewAll(ctx, o, nil)
+	i.presenter.ViewAll(ctx, o)
 }
 func (i *UserInteractorImpl) Create(input input.UserCreateInputData) {
 }
