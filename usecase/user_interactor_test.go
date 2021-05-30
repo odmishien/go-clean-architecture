@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"errors"
 	"haiken/entity"
 	mock_usecase "haiken/mock"
 	"haiken/usecase/output"
@@ -38,6 +39,16 @@ func TestUserInteractorImpl_GetAll(t *testing.T) {
 			},
 			prepareMockPresenter: func(m *mock_usecase.MockUserPresenter) {
 				m.EXPECT().ViewAll(ctx, &output.UserGetAllOutputData{Users: us})
+			},
+			args: args{ctx: ctx},
+		},
+		{
+			name: "something wrong",
+			prepareMockRepository: func(m *mock_usecase.MockUserRepository) {
+				m.EXPECT().GetAll(ctx).Return(nil, errors.New("something wrong"))
+			},
+			prepareMockPresenter: func(m *mock_usecase.MockUserPresenter) {
+				m.EXPECT().ViewError(ctx, errors.New("something wrong"))
 			},
 			args: args{ctx: ctx},
 		},
