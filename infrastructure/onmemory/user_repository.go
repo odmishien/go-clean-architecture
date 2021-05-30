@@ -11,16 +11,9 @@ type UserRepositoryImpl struct {
 	db entity.Users
 }
 
-func NewUserRepository() usecase.UserRepository {
+func NewUserRepository(db entity.Users) usecase.UserRepository {
 	return &UserRepositoryImpl{
-		db: []entity.User{
-			{
-				ID:       1,
-				Name:     "default",
-				Email:    "default@gmail.com",
-				Password: "default",
-			},
-		},
+		db: db,
 	}
 }
 

@@ -1,6 +1,7 @@
 package registry
 
 import (
+	"haiken/entity"
 	"haiken/infrastructure/logger"
 	"haiken/infrastructure/onmemory"
 	"haiken/interface/http/presenter"
@@ -12,5 +13,5 @@ func NewUserInteractor() usecase.UserInteractor {
 }
 
 func newUserService() usecase.UserService {
-	return usecase.NewUserService(onmemory.NewUserRepository())
+	return usecase.NewUserService(onmemory.NewUserRepository(entity.Users{}))
 }
