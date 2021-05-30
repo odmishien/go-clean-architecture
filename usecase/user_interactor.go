@@ -13,19 +13,21 @@ type UserInteractor interface {
 }
 
 type UserInteractorImpl struct {
+	repo      UserRepository
 	presenter UserPresenter
 	service   UserService
 }
 
-func NewUserInteractor(presenter UserPresenter, service UserService) UserInteractor {
+func NewUserInteractor(repo UserRepository, presenter UserPresenter, service UserService) UserInteractor {
 	return &UserInteractorImpl{
+		repo:      repo,
 		presenter: presenter,
 		service:   service,
 	}
 }
 
 func (i *UserInteractorImpl) GetAll(ctx context.Context) {
-	users, err := i.service.GetAll(ctx)
+	users, err := i.repo.GetAll(ctx)
 	if err != nil {
 		i.presenter.ViewError(ctx, err)
 		return
@@ -41,7 +43,7 @@ func (i *UserInteractorImpl) Create(ctx context.Context, input input.UserCreateI
 		i.presenter.ViewError(ctx, err)
 		return
 	}
-	createdID, err := i.service.Create(ctx, input)
+	createdID, err := i.repo.Create(ctx, input.Name, input.Email, input.Password)
 	if err != nil {
 		i.presenter.ViewError(ctx, err)
 		return
@@ -51,7 +53,7 @@ func (i *UserInteractorImpl) Create(ctx context.Context, input input.UserCreateI
 }
 
 func (i *UserInteractorImpl) GetByID(ctx context.Context, input input.UserGetByIDInputData) {
-	u, err := i.service.GetByID(ctx, input)
+	u, err := i.repo.GetByID(ctx, input.ID)
 	if err != nil {
 		i.presenter.ViewError(ctx, err)
 	}

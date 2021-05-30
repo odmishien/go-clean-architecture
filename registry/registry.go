@@ -9,9 +9,9 @@ import (
 )
 
 func NewUserInteractor() usecase.UserInteractor {
-	return usecase.NewUserInteractor(presenter.NewUserPresenter(logger.NewLogger()), newUserService())
-}
-
-func newUserService() usecase.UserService {
-	return usecase.NewUserService(onmemory.NewUserRepository(entity.Users{}))
+	return usecase.NewUserInteractor(
+		onmemory.NewUserRepository(entity.Users{}),
+		presenter.NewUserPresenter(logger.NewLogger()),
+		usecase.NewUserService(),
+	)
 }
