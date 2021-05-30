@@ -3,37 +3,42 @@ package presenter
 import (
 	"context"
 	"encoding/json"
+	"haiken/entity"
 	"haiken/usecase"
 	"haiken/usecase/output"
-	"log"
 	"net/http"
 )
 
-type UserPresenterImpl struct{}
+type UserPresenterImpl struct {
+	logger entity.Logger
+}
 
-func NewUserPresenter() usecase.UserPresenter {
-	return &UserPresenterImpl{}
+func NewUserPresenter(logger entity.Logger) usecase.UserPresenter {
+	return &UserPresenterImpl{
+		logger: logger,
+	}
 }
 
 func (p *UserPresenterImpl) ViewAll(ctx context.Context, output *output.UserGetAllOutputData) {
 	w := getResponseWriter(ctx)
-	returnJSON(w, output)
+	p.returnJSON(w, output)
 }
 
 func (p *UserPresenterImpl) ViewCreate(ctx context.Context, output *output.UserCreateOutputData) {
 	w := getResponseWriter(ctx)
-	returnJSON(w, output)
+	p.returnJSON(w, output)
 }
 
 func (p *UserPresenterImpl) ViewError(ctx context.Context, err error) {
 	w := getResponseWriter(ctx)
-	log.Fatalf("error: %s", err.Error())
+	p.logger.Errorf(err.Error())
 	http.Error(w, err.Error(), http.StatusInternalServerError)
 }
 
-func returnJSON(w http.ResponseWriter, value interface{}) {
+func (p *UserPresenterImpl) returnJSON(w http.ResponseWriter, value interface{}) {
 	b, err := json.Marshal(value)
 	if err != nil {
+		p.logger.Errorf(err.Error())
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 	w.Header().Set("content-type", "application/json")

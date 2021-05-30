@@ -15,9 +15,9 @@ func NewUserRepository() usecase.UserRepository {
 		db: []entity.User{
 			{
 				ID:       1,
-				Name:     "hoge",
-				Email:    "hoge.gmail.com",
-				Password: "asdfaygaerga",
+				Name:     "default",
+				Email:    "default@gmail.com",
+				Password: "default",
 			},
 		},
 	}
