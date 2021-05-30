@@ -12,5 +12,6 @@ func main() {
 	uc := controller.NewUserController(ui)
 
 	http.HandleFunc("/users", uc.GetAll)
+	http.HandleFunc("/user", uc.Create)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }

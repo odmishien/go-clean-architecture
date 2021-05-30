@@ -20,6 +20,11 @@ func (p *UserPresenterImpl) ViewAll(ctx context.Context, output *output.UserGetA
 	returnJSON(w, output)
 }
 
+func (p *UserPresenterImpl) ViewCreate(ctx context.Context, output *output.UserCreateOutputData) {
+	w := getResponseWriter(ctx)
+	returnJSON(w, output)
+}
+
 func (p *UserPresenterImpl) ViewError(ctx context.Context, err error) {
 	w := getResponseWriter(ctx)
 	log.Fatalf("error: %s", err.Error())

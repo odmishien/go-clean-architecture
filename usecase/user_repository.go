@@ -7,6 +7,6 @@ import (
 
 type UserRepository interface {
 	GetAll(ctx context.Context) (entity.Users, error)
-	Create(entity.User) (id int, err error)
+	Create(ctx context.Context, name, email, password string) (id int, err error)
 	GetByID(id int) (*entity.User, error)
 }

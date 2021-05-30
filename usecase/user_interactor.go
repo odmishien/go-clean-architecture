@@ -8,7 +8,7 @@ import (
 
 type UserInteractor interface {
 	GetAll(ctx context.Context)
-	Create(input input.UserCreateInputData)
+	Create(ctx context.Context, input input.UserCreateInputData)
 	GetByID(input input.UserGetByIDInputData)
 }
 
@@ -34,7 +34,13 @@ func (i *UserInteractorImpl) GetAll(ctx context.Context) {
 	}
 	i.presenter.ViewAll(ctx, o)
 }
-func (i *UserInteractorImpl) Create(input input.UserCreateInputData) {
+func (i *UserInteractorImpl) Create(ctx context.Context, input input.UserCreateInputData) {
+	createdID, err := i.repo.Create(ctx, input.Name, input.Email, input.Password)
+	if err != nil {
+		i.presenter.ViewError(ctx, err)
+	}
+	o := &output.UserCreateOutputData{CreatedID: createdID}
+	i.presenter.ViewCreate(ctx, o)
 }
 
 func (i *UserInteractorImpl) GetByID(input input.UserGetByIDInputData) {
