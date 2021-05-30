@@ -1,4 +1,4 @@
-package usecase
+package input
 
 type UserCreateInputData struct {
 	ID       int

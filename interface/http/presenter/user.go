@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"haiken/usecase"
+	"haiken/usecase/output"
 	"net/http"
 )
 
@@ -13,7 +14,7 @@ func NewUserPresenter() usecase.UserPresenter {
 	return &UserPresenterImpl{}
 }
 
-func (p *UserPresenterImpl) ViewAll(ctx context.Context, output *usecase.UserGetAllOutputData, err error) {
+func (p *UserPresenterImpl) ViewAll(ctx context.Context, output *output.UserGetAllOutputData, err error) {
 	w, _ := ctx.Value("resWriter").(http.ResponseWriter)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

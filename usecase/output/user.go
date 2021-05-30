@@ -1,4 +1,4 @@
-package usecase
+package output
 
 import "haiken/entity"
 

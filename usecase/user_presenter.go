@@ -1,7 +1,10 @@
 package usecase
 
-import "context"
+import (
+	"context"
+	"haiken/usecase/output"
+)
 
 type UserPresenter interface {
-	ViewAll(ctx context.Context, output *UserGetAllOutputData, err error)
+	ViewAll(ctx context.Context, output *output.UserGetAllOutputData, err error)
 }

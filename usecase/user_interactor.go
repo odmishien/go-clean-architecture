@@ -2,12 +2,14 @@ package usecase
 
 import (
 	"context"
+	"haiken/usecase/input"
+	"haiken/usecase/output"
 )
 
 type UserInteractor interface {
 	GetAll(ctx context.Context)
-	Create(input UserCreateInputData)
-	GetByID(input UserGetByIDInputData)
+	Create(input input.UserCreateInputData)
+	GetByID(input input.UserGetByIDInputData)
 }
 
 type UserInteractorImpl struct {
@@ -27,13 +29,13 @@ func (i *UserInteractorImpl) GetAll(ctx context.Context) {
 	if err != nil {
 		i.presenter.ViewAll(ctx, nil, err)
 	}
-	o := &UserGetAllOutputData{
+	o := &output.UserGetAllOutputData{
 		Users: users,
 	}
 	i.presenter.ViewAll(ctx, o, nil)
 }
-func (i *UserInteractorImpl) Create(input UserCreateInputData) {
+func (i *UserInteractorImpl) Create(input input.UserCreateInputData) {
 }
 
-func (i *UserInteractorImpl) GetByID(input UserGetByIDInputData) {
+func (i *UserInteractorImpl) GetByID(input input.UserGetByIDInputData) {
 }
