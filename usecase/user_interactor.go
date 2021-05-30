@@ -9,7 +9,7 @@ import (
 type UserInteractor interface {
 	GetAll(ctx context.Context)
 	Create(ctx context.Context, input input.UserCreateInputData)
-	GetByID(input input.UserGetByIDInputData)
+	GetByID(ctx context.Context, input input.UserGetByIDInputData)
 }
 
 type UserInteractorImpl struct {
@@ -50,5 +50,13 @@ func (i *UserInteractorImpl) Create(ctx context.Context, input input.UserCreateI
 	i.presenter.ViewCreate(ctx, o)
 }
 
-func (i *UserInteractorImpl) GetByID(input input.UserGetByIDInputData) {
+func (i *UserInteractorImpl) GetByID(ctx context.Context, input input.UserGetByIDInputData) {
+	u, err := i.service.GetByID(ctx, input)
+	if err != nil {
+		i.presenter.ViewError(ctx, err)
+	}
+	o := &output.UserGetByIDOutputData{
+		User: *u,
+	}
+	i.presenter.View(ctx, o)
 }

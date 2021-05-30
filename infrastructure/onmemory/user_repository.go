@@ -2,6 +2,7 @@ package onmemory
 
 import (
 	"context"
+	"errors"
 	"haiken/entity"
 	"haiken/usecase"
 )
@@ -38,6 +39,11 @@ func (r *UserRepositoryImpl) Create(ctx context.Context, name, email, password s
 	return cID + 1, nil
 }
 
-func (r *UserRepositoryImpl) GetByID(id int) (*entity.User, error) {
-	return nil, nil
+func (r *UserRepositoryImpl) GetByID(ctx context.Context, id int) (*entity.User, error) {
+	for _, u := range r.db {
+		if u.ID == id {
+			return &u, nil
+		}
+	}
+	return nil, errors.New("user not found")
 }

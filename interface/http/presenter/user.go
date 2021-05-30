@@ -24,6 +24,11 @@ func (p *UserPresenterImpl) ViewAll(ctx context.Context, output *output.UserGetA
 	p.returnJSON(w, output)
 }
 
+func (p *UserPresenterImpl) View(ctx context.Context, output *output.UserGetByIDOutputData) {
+	w := getResponseWriter(ctx)
+	p.returnJSON(w, output)
+}
+
 func (p *UserPresenterImpl) ViewCreate(ctx context.Context, output *output.UserCreateOutputData) {
 	w := getResponseWriter(ctx)
 	p.returnJSON(w, output)

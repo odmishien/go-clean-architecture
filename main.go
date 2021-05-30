@@ -11,7 +11,8 @@ func main() {
 	ui := registry.NewUserInteractor()
 	uc := controller.NewUserController(ui)
 
-	http.HandleFunc("/users", uc.GetAll)
+	http.HandleFunc("/get-users", uc.GetAll)
 	http.HandleFunc("/user", uc.Create)
+	http.HandleFunc("/get-user", uc.GetByID)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }

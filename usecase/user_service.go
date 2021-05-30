@@ -11,6 +11,7 @@ import (
 type UserService interface {
 	ValidateCreateInput(input input.UserCreateInputData) error
 	GetAll(ctx context.Context) (entity.Users, error)
+	GetByID(ctx context.Context, input input.UserGetByIDInputData) (*entity.User, error)
 	Create(ctx context.Context, input input.UserCreateInputData) (createdID int, err error)
 }
 
@@ -31,6 +32,10 @@ func (s *UserServiceImpl) ValidateCreateInput(input input.UserCreateInputData) e
 
 func (s *UserServiceImpl) GetAll(ctx context.Context) (entity.Users, error) {
 	return s.repo.GetAll(ctx)
+}
+
+func (s *UserServiceImpl) GetByID(ctx context.Context, input input.UserGetByIDInputData) (*entity.User, error) {
+	return s.repo.GetByID(ctx, input.ID)
 }
 
 func (s *UserServiceImpl) Create(ctx context.Context, input input.UserCreateInputData) (createdID int, err error) {

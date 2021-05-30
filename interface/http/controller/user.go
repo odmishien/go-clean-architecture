@@ -38,5 +38,12 @@ func (c *UserController) Create(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *UserController) GetByID(w http.ResponseWriter, r *http.Request) {
-
+	ctx := setResponseWriter(r.Context(), w)
+	var ci input.UserGetByIDInputData
+	err := json.NewDecoder(r.Body).Decode(&ci)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	c.ui.GetByID(ctx, ci)
 }
