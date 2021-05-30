@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"context"
 	"haiken/usecase"
 	"net/http"
 )
@@ -18,7 +17,7 @@ func NewUserController(ui usecase.UserInteractor) UserController {
 
 func (c *UserController) GetAll(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	ctx = context.WithValue(ctx, "resWriter", w)
+	ctx = setResponseWriter(ctx, w)
 	c.ui.GetAll(ctx)
 }
 
