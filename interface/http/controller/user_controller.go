@@ -1,41 +1,31 @@
 package controller
 
 import (
-	"fmt"
+	"context"
 	"haiken/usecase"
-	"log"
 	"net/http"
 )
 
-// TODO: impl presentor
-type UserController interface {
-	GetAll(w http.ResponseWriter, r *http.Request)
-	Create(w http.ResponseWriter, r *http.Request)
-	GetByID(w http.ResponseWriter, r *http.Request)
-}
-
-type UserControllerImpl struct {
+type UserController struct {
 	ui usecase.UserInteractor
 }
 
 func NewUserController(ui usecase.UserInteractor) UserController {
-	return &UserControllerImpl{
+	return UserController{
 		ui: ui,
 	}
 }
 
-func (c *UserControllerImpl) GetAll(w http.ResponseWriter, r *http.Request) {
-	us, err := c.ui.GetAll()
-	if err != nil {
-		log.Fatalln(err.Error())
-	}
-	fmt.Println(us)
+func (c *UserController) GetAll(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	ctx = context.WithValue(ctx, "resWriter", w)
+	c.ui.GetAll(ctx)
 }
 
-func (c *UserControllerImpl) Create(w http.ResponseWriter, r *http.Request) {
+func (c *UserController) Create(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (c *UserControllerImpl) GetByID(w http.ResponseWriter, r *http.Request) {
+func (c *UserController) GetByID(w http.ResponseWriter, r *http.Request) {
 
 }

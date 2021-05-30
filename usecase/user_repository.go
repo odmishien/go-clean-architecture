@@ -1,9 +1,12 @@
 package usecase
 
-import "haiken/entity"
+import (
+	"context"
+	"haiken/entity"
+)
 
 type UserRepository interface {
-	GetAll() (entity.Users, error)
+	GetAll(ctx context.Context) (entity.Users, error)
 	Create(entity.User) (id int, err error)
 	GetByID(id int) (*entity.User, error)
 }

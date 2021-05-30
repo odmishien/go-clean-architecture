@@ -1,6 +1,7 @@
 package onmemory
 
 import (
+	"context"
 	"haiken/entity"
 	"haiken/usecase"
 )
@@ -22,7 +23,7 @@ func NewUserRepository() usecase.UserRepository {
 	}
 }
 
-func (r *UserRepositoryImpl) GetAll() (entity.Users, error) {
+func (r *UserRepositoryImpl) GetAll(ctx context.Context) (entity.Users, error) {
 	return r.db, nil
 }
 
