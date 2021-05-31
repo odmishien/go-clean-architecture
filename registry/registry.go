@@ -3,7 +3,7 @@ package registry
 import (
 	"haiken/entity"
 	"haiken/infrastructure/logger"
-	"haiken/infrastructure/onmemory"
+	"haiken/interface/gateway/onmemory"
 	"haiken/interface/http/presenter"
 	"haiken/usecase"
 )
